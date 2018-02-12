@@ -1,13 +1,6 @@
-
-//On page load, let player X start the game
-//On page load, instantiate a new board
-//on click of a button, change button value to X
-
 function Board() {
   return {
-    row1: [null, null, null],
-    row2: [null, null, null],
-    row3: [null, null, null],
+    board: [null, null, null, null, null, null, null, null, null],
     counter: 0
   }
 };
@@ -17,16 +10,84 @@ var newBoardCreator = function() {
   return newBoard;
 };
 
-var board = newBoardCreator();
+var play = newBoardCreator();
 
-var someFunction = function(event){
-  if(event.target.innerText === '-') {
-    if (board.counter % 2 === 0) {
-      event.target.innerText = "X";
-      board.counter++;
+
+var checkRows = function (board, player) {
+    if ((board[0] === player) && (board[1] === player) && (board[2] === player)) {
+      return true;
+    } else if ((board[3] === player) && (board[4] === player) && (board[5] === player)) {
+      return true
+    } else if ((board[6] === player) && (board[7] === player) && (board[8] === player)) {
+      return true;
     } else {
-      event.target.innerText = "O";
-      board.counter++;
+      return false;
     }
+}
+
+var checkColumns = function (board, player) {
+    if ((board[0] === player) && (board[3] === player) && (board[6] === player)) {
+      return true;
+    } else if ((board[1] === player) && (board[4] === player) && (board[7] === player)) {
+      return true
+    } else if ((board[2] === player) && (board[5] === player) && (board[8] === player)) {
+      return true;
+    } else {
+      return false;
+    }
+}
+
+var checkDiagonals = function (board, player) {
+  if ((board[0] === player) && (board[4] === player) && (board[8] === player)) {
+      return true;
+    } else if ((board[6] === player) && (board[4] === player) && (board[2] === player)) {
+      return true;
+    } else {
+      return false;
+    }
+}
+
+
+var checkIfPlayerWon = function(board, player) {
+  if (checkRows(board, player) || checkDiagonals(board, player) || checkColumns(board, player)) {
+    return true;
+  } else {
+    return false;
   }
 }
+
+var someFunction = function(event){
+
+  if (event.target.value === 'restart') {
+    window.location.reload(true);
+  }
+
+  if(event.target.innerText === '-') {
+    if (play.counter % 2 === 0) {
+      event.target.innerText = "X";
+      play.board[parseInt(event.target.value)] = 0;
+
+      if (checkIfPlayerWon(play.board, 0)) {
+        window.location.reload(true);
+        alert ('Player X won!!!');
+      }
+
+      play.counter++;
+    } else {
+      event.target.innerText = "O";
+      play.board[parseInt(event.target.value)] = 1;
+       
+      if (checkIfPlayerWon(play.board, 1)) {
+        alert ('Player O won!!!');
+        window.location.reload(true);
+      }
+
+      play.counter++;
+    }
+  } 
+
+  if (!play.board.includes(null)) {
+    alert("that was a tie");
+    window.location.reload(true);
+  }
+};
