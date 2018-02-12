@@ -10,6 +10,14 @@ var newBoardCreator = function() {
   return newBoard;
 };
 
+var newGame = function(){
+  var allRows = document.getElementsByClassName('row');
+  for (var key in allRows) {
+      allRows[key].innerText = "-";
+  }
+  play = newBoardCreator();
+};
+
 var play = newBoardCreator();
 
 
@@ -56,10 +64,10 @@ var checkIfPlayerWon = function(board, player) {
   }
 }
 
-var someFunction = function(event){
+var handleThisEvent = function(event){
 
   if (event.target.value === 'restart') {
-    window.location.reload(true);
+    newGame();
   }
 
   if(event.target.innerText === '-') {
