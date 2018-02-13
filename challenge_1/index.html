@@ -2,40 +2,67 @@
 <html>
   <head>
     <script src="app.js"></script>
-    <style>
-    .container {
-    }
-    .board button {
-      height: 100px;
-      width: 100px;
-      margin-top: 5px ;
-    }
 
+    <style>
+
+      .container {
+        width: 100%;
+        padding: 20px;
+      }
+      .board button {
+        height: 100px;
+        width: 100px;
+        margin-top: 5px ;
+      }
+      .scoreBoard {
+        padding-top: 20px;
+      }
     </style>
+
     <meta charset="utf-8">
     <title>Tic Tac Toe </title>
+
   </head>
   <body>
-    <h1>Tic Tac Toe Challenge</h1>
-    <div class = "board" '>
-      <div class = "row1">
-        <button value = '0' class = "row" onclick= 'handleThisEvent(event)' >-</button>
-        <button value = '1' class = "row" onclick= 'handleThisEvent(event)' >-</button>
-        <button value = '2' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+      <div class = "banner"> 
+        <h1>Tic Tac Toe Challenge</h1> 
       </div>
-      <div class = "row2">
-        <button value = '3' class = "row" onclick= 'handleThisEvent(event)' >-</button>
-        <button value = '4' class = "row" onclick= 'handleThisEvent(event)' >-</button>
-        <button value = '5' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+
+    <section class = "container">
+
+
+
+      <div class = "board" '>
+
+        <div class = "row1">
+          <button value = '0' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+          <button value = '1' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+          <button value = '2' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+        </div>
+        <div class = "row2">
+          <button value = '3' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+          <button value = '4' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+          <button value = '5' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+        </div>
+        <div class = "row3">
+          <button value = '6' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+          <button value = '7' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+          <button value = '8' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+        </div>
+
       </div>
-      <div class = "row3">
-        <button value = '6' class = "row" onclick= 'handleThisEvent(event)' >-</button>
-        <button value = '7' class = "row" onclick= 'handleThisEvent(event)' >-</button>
-        <button value = '8' class = "row" onclick= 'handleThisEvent(event)' >-</button>
+
+      <div class = 'scoreBoard'>
+        <div>
+          Player X: <span id = "playerXScore">0</span>
+          Player O: <span id = "playerOScore">0</span>
+        </div>
       </div>
-    </div>
-    <br>
-    <button value = 'restart' onclick= 'handleThisEvent(event)'>Restart Game</button>
+
+
+      <br>
+      <button value = 'restart' onclick= 'handleThisEvent(event)'>Restart Game</button>
+    </section>
   </body>
 </html>
 
