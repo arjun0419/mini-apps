@@ -14,21 +14,13 @@ function Board() {
   }
 };
 
-//creates a new instance of the Board object
-var newBoardCreator = function() {
-  var newBoard = new Board();
-  return newBoard;
-};
-
-// var play = newBoardCreator();
-
 //creates a new game
 var newGame = function(){
   var allRows = document.getElementsByClassName('row');
   for (var key in allRows) {
       allRows[key].innerText = "-";
   }
-  play = newBoardCreator();
+  play = new Board();
 };
 
 //checks if there are any rowConflicts
@@ -87,41 +79,42 @@ var handleThisEvent = function(event){
     if (play.counter % 2 === 0) {
       event.target.innerText = "X";
       play.board[parseInt(event.target.value)] = 0;
+      play.counter++;
 
       if (checkIfPlayerWon(play.board, 0)) {
         gameSession.playerXwins++;
-        console.log(gameSession.playerXwins);
         var scoreNode = document.getElementById('playerXScore');
-        console.log(scoreNode.innerText);
         scoreNode.innerText = gameSession.playerXwins;
         alert ('Player X won!!!');
         newGame();
+        console.log("counter:", play.counter);
+         console.log("play:", play)
       }
 
-      play.counter++;
+
     } else {
       event.target.innerText = "O";
       play.board[parseInt(event.target.value)] = 1;
+      play.counter++;
        
       if (checkIfPlayerWon(play.board, 1)) {
         gameSession.playerOwins++;
         var scoreNode = document.getElementById('playerOScore');
-        console.log("O node", scoreNode.innerText);
         scoreNode.innerText = gameSession.playerOwins;
         alert ('Player O won!!!');
         newGame();
+        console.log("counter:", play.counter);
+        console.log("play:", play)
       }
-
-      play.counter++;
     }
   } 
 
   if (!play.board.includes(null)) {
     alert("that was a tie");
-
+    newGame();
   }
 };
 
 //instantiates a new game
+var play = new Board();
 var gameSession = new GameSession();
-newGame();
