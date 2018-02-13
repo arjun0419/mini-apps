@@ -1,0 +1,25 @@
+{
+  "name": "challenge_2",
+  "version": "1.0.0",
+  "description": "json to csv converter",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjun0419/hrsf91-mini-apps.git"
+  },
+  "author": "arjun0419",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arjun0419/hrsf91-mini-apps/issues"
+  },
+  "homepage": "https://github.com/arjun0419/hrsf91-mini-apps#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "live-server": "^1.2.0",
+    "nodemon": "^1.14.12"
+  }
+}
