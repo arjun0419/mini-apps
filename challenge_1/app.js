@@ -76,6 +76,7 @@ var handleThisEvent = function(event){
   }
 
   if(event.target.innerText === '-') {
+
     if (play.counter % 2 === 0) {
       event.target.innerText = "X";
       play.board[parseInt(event.target.value)] = 0;
@@ -90,7 +91,6 @@ var handleThisEvent = function(event){
         console.log("counter:", play.counter);
          console.log("play:", play)
       }
-
 
     } else {
       event.target.innerText = "O";
