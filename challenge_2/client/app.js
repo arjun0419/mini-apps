@@ -1,5 +1,5 @@
 
-
+//hanldes click of a submit button
 var handleClick = function(event) {
   $( ".request" ).empty();
   $( ".response" ).empty();
@@ -9,8 +9,8 @@ var handleClick = function(event) {
   postData(data);
 };
 
+//ajax POST call to send/reveive data
 var postData = function(data) {
-  // console.log(data);
   $.ajax({
     method: "POST",
     contentType: "application/json",
@@ -20,7 +20,6 @@ var postData = function(data) {
     .done(function( msg ) {
       $( ".response" ).append(`<div>${msg}</div>`);
       $(".received").css('display', 'block');
-      console.log( "Data received: " + msg );
   });
 }
 
