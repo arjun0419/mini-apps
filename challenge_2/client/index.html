@@ -3,19 +3,50 @@
   <head>
     <meta charset="utf-8">
     <title>CSV to JSON converter</title>
-    <script type="text/javascript" src="app.js"></script>
     <script
       src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous">
+     <!--  crossorigin="anonymous" -->
+      >
     </script>
+    <script type="text/javascript" src="app.js"></script>
+    <style>
+      body {
+        margin-top: 90px;
+        margin-left: 50px;
+        margin-right: 50px;
+        text-align: center;
+        font-family: sans-serif;
+      }
+      .submitted {
+        display: none;
+      }
+      .received {
+        display: none;
+      }
+    </style>
   </head>
 
-  <body>
+  <body style="align-content: center">
     <h1>JSON to CSV converter!</h1>
     <div>
       <input placeholder="Feed me some JSON"></input>
-      <button>Submit</button>
+      <button onclick= "handleClick(event)">Submit</button>
+    </div>
+<!--     <div>
+      <form action="/convert/" method="post">
+        <label for="team_name">Enter name: </label>
+        <input id="team_name" type="text" name="name_field" value="Default name for team.">
+        <input type="submit" value="OK">
+      </form>
+    </div> -->
+    <div class = "submitted">
+      <h1>This is what you sent in JSON:</h1>
+      <div class = "request"></div>
+    </div>
+    <div class = "received">
+      <h1>This is what you received in CSV:</h1>
+      <div class = "response"></div>
     </div>
   </body>
 </html>
