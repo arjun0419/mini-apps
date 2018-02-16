@@ -989,32 +989,57 @@ var Game = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
     _this.state = {
-      round: 0,
+      round: 1,
       totalScore: 0,
-      roundScore: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      currentRound: []
+      roundScore: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
+      frameArray: []
     };
 
     _this.handleClick = _this.handleClick.bind(_this);
+    _this.updateTotalScore = _this.updateTotalScore.bind(_this);
+    _this.updateFrameArray = _this.updateFrameArray.bind(_this);
+    _this.updateRoundScoreArray = _this.updateRoundScoreArray.bind(_this);
     return _this;
   }
 
   _createClass(Game, [{
-    key: 'handleClick',
-    value: function handleClick(value) {
-
-      //update current round score
-      var currentRoundsArr = this.state.roundScore.slice();
-      currentRoundsArr[this.state.round] = value;
-      this.setState({ roundScore: currentRoundsArr });
-
-      //update running total
+    key: 'updateRoundScoreArray',
+    value: function updateRoundScoreArray(value) {
+      var newRoundScoreArray = this.state.roundScore.slice();
+      newRoundScoreArray[this.state.round - 1] = this.state.frameArray;
+      this.setState({ roundScore: newRoundScoreArray });
+      this.setState({ frameArray: [value] });
+    }
+  }, {
+    key: 'updateFrameArray',
+    value: function updateFrameArray(value) {
+      var newFrameArray = this.state.frameArray.slice();
+      newFrameArray.push(value);
+      this.setState({ frameArray: newFrameArray });
+    }
+  }, {
+    key: 'updateTotalScore',
+    value: function updateTotalScore(value) {
       var oldScore = this.state.totalScore;
       var newScore = oldScore + value;
       this.setState({ totalScore: newScore });
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(value) {
 
-      //increment round after each play
-      this.setState({ round: this.state.round + 1 });
+      //update total score
+      this.updateTotalScore(value);
+
+      //push value into frameArr
+      this.updateFrameArray(value);
+
+      if (this.state.frameArray.length === 2) {
+        this.updateRoundScoreArray(value);
+
+        //increment round 
+        this.setState({ round: this.state.round + 1 });
+      }
     }
   }, {
     key: 'render',
@@ -1043,7 +1068,6 @@ var Game = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_board2.default, { style: { margin: "200px" }, round: this.state.roundScore }),
           _react2.default.createElement(
             'h3',
             null,
@@ -1052,7 +1076,8 @@ var Game = function (_React$Component) {
             ' rounds is ',
             this.state.totalScore,
             ' '
-          )
+          ),
+          _react2.default.createElement(_board2.default, { style: { margin: "200px" }, round: this.state.roundScore })
         )
       );
     }
@@ -18396,7 +18421,7 @@ function Board(props) {
   var devStyle = {
     display: 'block',
     border: 'solid',
-    width: '300px',
+    width: '350px',
     padding: '5px 5px 5px 5px'
   };
 

@@ -23,29 +23,51 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      round: 0,
+      round: 1,
       totalScore: 0,
-      roundScore: [0,0,0,0,0,0,0,0,0,0],
-      currentRound: [],
+      roundScore: [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
+      frameArray: [],
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.updateTotalScore = this.updateTotalScore.bind(this);
+    this.updateFrameArray = this.updateFrameArray.bind(this);
+    this.updateRoundScoreArray = this.updateRoundScoreArray.bind(this);
   }
 
-  handleClick(value) {
+  updateRoundScoreArray(value) {
+     var newRoundScoreArray = this.state.roundScore.slice();
+      newRoundScoreArray[this.state.round - 1] = this.state.frameArray;
+      this.setState({roundScore: newRoundScoreArray});
+      this.setState({frameArray: [value]});
+  }
 
-    //update current round score
-    var currentRoundsArr = this.state.roundScore.slice();
-    currentRoundsArr[this.state.round] = value;
-    this.setState({roundScore: currentRoundsArr})
+  updateFrameArray(value) {
+    var newFrameArray = this.state.frameArray.slice();
+    newFrameArray.push(value);
+    this.setState({frameArray: newFrameArray});
+  }
 
-    //update running total
+  updateTotalScore(value) {
     var oldScore = this.state.totalScore;
     var newScore = oldScore + value;
     this.setState({totalScore: newScore})
+  };
 
-    //increment round after each play
-    this.setState({round: this.state.round + 1});
+  handleClick(value) {
+
+    //update total score
+    this.updateTotalScore(value);
+
+    //push value into frameArr
+    this.updateFrameArray(value);
+
+    if (this.state.frameArray.length === 2) {
+      this.updateRoundScoreArray(value)
+
+      //increment round 
+      this.setState({round: this.state.round + 1});        
+    } 
   }
 
   render() {
@@ -58,8 +80,9 @@ class Game extends React.Component {
           <PinSelector handleClick = {this.handleClick} />
         </div>
         <div>
-          <Board style = {{margin: "200px"}}round = {this.state.roundScore}/> 
           <h3> Your total Score after {this.state.round} rounds is {this.state.totalScore} </h3>
+          <Board style={{margin: "200px"}} round={this.state.roundScore}/> 
+
         </div>
       </div>
     );

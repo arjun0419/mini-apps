@@ -5,7 +5,7 @@ function Board(props) {
   const devStyle = {
     display:'block',
     border: 'solid',
-    width: '300px',  
+    width: '350px',  
     padding: '5px 5px 5px 5px'
   }
 
