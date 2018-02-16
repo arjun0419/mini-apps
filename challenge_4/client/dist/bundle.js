@@ -992,7 +992,8 @@ var Game = function (_React$Component) {
       round: 1,
       totalScore: 0,
       roundScore: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
-      frameArray: []
+      frameArray: [],
+      pinsToRender: 10
     };
 
     _this.handleClick = _this.handleClick.bind(_this);
@@ -1005,10 +1006,11 @@ var Game = function (_React$Component) {
   _createClass(Game, [{
     key: 'updateRoundScoreArray',
     value: function updateRoundScoreArray(value) {
+      this.updateFrameArray(value);
       var newRoundScoreArray = this.state.roundScore.slice();
       newRoundScoreArray[this.state.round - 1] = this.state.frameArray;
       this.setState({ roundScore: newRoundScoreArray });
-      this.setState({ frameArray: [value] });
+      this.setState({ frameArray: [] });
     }
   }, {
     key: 'updateFrameArray',
@@ -1027,18 +1029,23 @@ var Game = function (_React$Component) {
   }, {
     key: 'handleClick',
     value: function handleClick(value) {
-
       //update total score
       this.updateTotalScore(value);
 
-      //push value into frameArr
-      this.updateFrameArray(value);
+      //if value clicked is < 10, render 10 - value pins
+      if (value < 10) {
+        this.setState({ pinsToRender: 10 - value });
+      }
 
-      if (this.state.frameArray.length === 2) {
+      //check to see if this click was for the second frame,
+      if (this.state.frameArray.length === 1) {
         this.updateRoundScoreArray(value);
-
+        this.setState({ pinsToRender: 10 });
         //increment round 
         this.setState({ round: this.state.round + 1 });
+      } else {
+        //push value into frameArr
+        this.updateFrameArray(value);
       }
     }
   }, {
@@ -1063,7 +1070,7 @@ var Game = function (_React$Component) {
             this.state.round,
             '. Pick number of pins you want to hit:'
           ),
-          _react2.default.createElement(_PinSelector2.default, { handleClick: this.handleClick })
+          _react2.default.createElement(_PinSelector2.default, { pinsToRender: this.state.pinsToRender, handleClick: this.handleClick })
         ),
         _react2.default.createElement(
           'div',
@@ -1077,7 +1084,7 @@ var Game = function (_React$Component) {
             this.state.totalScore,
             ' '
           ),
-          _react2.default.createElement(_board2.default, { style: { margin: "200px" }, round: this.state.roundScore })
+          _react2.default.createElement(_board2.default, { style: { margin: "200px" }, round: this.state.roundScore, totalScore: this.state.totalScore })
         )
       );
     }
@@ -18426,14 +18433,13 @@ function Board(props) {
   };
 
   var scoreArray = props.round;
-
   var scoreBoard = scoreArray.map(function (round, index) {
     return _react2.default.createElement(
       'div',
       { style: devStyle },
       'Round ',
       index + 1,
-      ' toal score: ',
+      ' total score: ',
       round[0] + round[1],
       ' (Frame 1: ',
       round[0],
@@ -18479,7 +18485,12 @@ function PinSelector(props) {
     width: '40px'
   };
 
-  var pins = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var pins = [];
+
+  for (var i = 1; i < props.pinsToRender + 1; i++) {
+    pins.push(i);
+  }
+
   var keyPad = pins.map(function (pin) {
     return _react2.default.createElement(
       'button',

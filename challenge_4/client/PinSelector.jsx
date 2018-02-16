@@ -7,7 +7,12 @@ function PinSelector(props) {
     width: '40px'
   }
 
-  const pins = [1,2,3,4,5,6,7,8,9,10];
+  let pins = [];
+
+  for (var i = 1; i < props.pinsToRender + 1; i++) {
+    pins.push(i);
+  }
+
   let keyPad = pins.map((pin)=> <button 
       style = {divStyle} 
       onClick={()=>props.handleClick(pin) }> {pin}

@@ -10,10 +10,9 @@ function Board(props) {
   }
 
   let scoreArray = props.round;
-
   let scoreBoard = scoreArray.map((round, index)=> 
     <div style = {devStyle} >
-      Round {index+1} toal score: {round[0] + round[1]} (Frame 1: {round[0]} & Frame 2: {round[1]})
+      Round {index+1} total score: {round[0] + round[1]} (Frame 1: {round[0]} & Frame 2: {round[1]})
     </div>);
 
   return <div>

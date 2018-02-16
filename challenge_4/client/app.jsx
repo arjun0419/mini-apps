@@ -27,6 +27,7 @@ class Game extends React.Component {
       totalScore: 0,
       roundScore: [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
       frameArray: [],
+      pinsToRender: 10,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -36,10 +37,11 @@ class Game extends React.Component {
   }
 
   updateRoundScoreArray(value) {
-     var newRoundScoreArray = this.state.roundScore.slice();
+      this.updateFrameArray(value);
+      var newRoundScoreArray = this.state.roundScore.slice();
       newRoundScoreArray[this.state.round - 1] = this.state.frameArray;
       this.setState({roundScore: newRoundScoreArray});
-      this.setState({frameArray: [value]});
+      this.setState({frameArray: []});
   }
 
   updateFrameArray(value) {
@@ -55,19 +57,24 @@ class Game extends React.Component {
   };
 
   handleClick(value) {
-
     //update total score
     this.updateTotalScore(value);
 
-    //push value into frameArr
-    this.updateFrameArray(value);
+    //if value clicked is < 10, render 10 - value pins
+    if (value < 10) {
+      this.setState({pinsToRender: 10 - value});
+    }
 
-    if (this.state.frameArray.length === 2) {
-      this.updateRoundScoreArray(value)
-
+    //check to see if this click was for the second frame,
+    if (this.state.frameArray.length === 1) {
+      this.updateRoundScoreArray(value);
+      this.setState({pinsToRender: 10});
       //increment round 
       this.setState({round: this.state.round + 1});        
-    } 
+    } else {
+      //push value into frameArr
+      this.updateFrameArray(value);
+    }
   }
 
   render() {
@@ -77,11 +84,11 @@ class Game extends React.Component {
         <h1>Let's Bowl!</h1>
         <div> 
           <h2>Alright, round {this.state.round}. Pick number of pins you want to hit:</h2>
-          <PinSelector handleClick = {this.handleClick} />
+          <PinSelector pinsToRender = {this.state.pinsToRender} handleClick = {this.handleClick} />
         </div>
         <div>
           <h3> Your total Score after {this.state.round} rounds is {this.state.totalScore} </h3>
-          <Board style={{margin: "200px"}} round={this.state.roundScore}/> 
+          <Board style={{margin: "200px"}} round={this.state.roundScore} totalScore = {this.state.totalScore}/> 
 
         </div>
       </div>
